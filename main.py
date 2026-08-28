@@ -10,7 +10,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b"Bot is active!")
+        self.wfile.write(b"Bot is alive!")
+
+    def do_HEAD(self):
+        self.send_response(200)
+        self.end_headers()
 
 def run_http_server():
     port = int(os.environ.get("PORT", 10000))
@@ -23,6 +27,7 @@ threading.Thread(target=run_http_server, daemon=True).start()
 intents = discord.Intents.default()
 intents.guilds = True
 intents.voice_states = True
+intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -37,12 +42,9 @@ async def on_ready():
             await channel.connect(reconnect=True, timeout=30.0)
             print(f"Successfully joined {channel.name}!")
         else:
-            print("Channel not found. Check the ID or Bot server access.")
+            print("Channel not found.")
     except Exception as e:
         print(f"Failed to join voice channel: {e}")
-
-token = os.environ.get("BOT_TOKEN")
-bot.run(token)
 
 token = os.environ.get("BOT_TOKEN")
 bot.run(token)
