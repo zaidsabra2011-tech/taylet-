@@ -23,7 +23,7 @@ threading.Thread(target=run_http_server, daemon=True).start()
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-VOICE_CHANNEL_ID = 1525434040822403283  # ضع ايدي روم الصوت هنا
+VOICE_CHANNEL_ID = 1525434040822403283
 
 @bot.event
 async def on_ready():
